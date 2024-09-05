@@ -1,17 +1,22 @@
-cmn_Hans,zho_Hans,Mandarin Chinese (Standard Beijing),Chinese Han Dialects (Mandarin)
-cmn_Hant,zho_Hant,Mandarin Chinese (Taiwanese),Chinese Han Dialects (Mandarin)
-ind_Latn,ind_Latn,Indonesian,Southeast Asian
-kor_Hang,kor_Hang,Korean,Northeast Asian
-jpn_Jpan,jpn_Jpan,Japanese,Northeast Asian
-lao_Laoo,lao_Laoo,Lao,Southeast Asian
-mya_Mymr,mya_Mymr,Burmese,Southeast Asian
-tha_Thai,tha_Thai,Thai,Southeast Asian
-vie_Latn,vie_Latn,Vietnamese,Southeast Asian
-yue_Hant,,Yue Chinese (Hong Kong Cantonese),Chinese Han Dialects (Other)
-zsm_Latn,zsm_Latn,Standard Malay,Southeast Asian
-bod_Tibt,bod_Tibt,Lhasa Tibetan,Chinese Ethnic Minorities
-kac_Latn,kac_Latn,Jingpho,Chinese Ethnic Minorities
-kaz_Cyrl,kaz_Cyrl,Kazakh,Chinese Ethnic Minorities
-uig_Arab,,Uyghur,Chinese Ethnic Minorities
-uzn_Latn,uzn_Latn,Northern Uzbek,Chinese Ethnic Minorities
-khk_Cyrl,khk_Cyrl,Halh Mongolian,Chinese Ethnic Minorities
+lang_code_flores,lang_code_bele,lang_name,lang_category,Speakers,EGIDS,Digital Language Support,GDP (billion USD)
+cmn_Hans,zho_Hans,Mandarin (Simplified),Mandarin Chinese,1140361330,1,1
+cmn_Hant,zho_Hant,Mandarin (Traditional),Mandarin Chinese,,
+ind_Latn,ind_Latn,Indonesian,Southeast Asian,199002320,1,0.87,1319
+kor_Hang,kor_Hang,Korean,Northeast Asian,81128730,1,0.96,1674
+jpn_Jpan,jpn_Jpan,Japanese,Northeast Asian,123466720,1,1,4232
+lao_Laoo,lao_Laoo,Lao,Southeast Asian,4489070,1,0.74,15.47
+mya_Mymr,mya_Mymr,Burmese,Southeast Asian,43165690,1,0.79,62.26
+tha_Thai,tha_Thai,Thai,Southeast Asian,61100520,1,0.93,495.4
+vie_Latn,vie_Latn,Vietnamese,Southeast Asian,86282000,1,0.87,408.8
+yue_Hant,,Yue Chinese (Hong Kong Cantonese),Chinese Han Dialects (Other),86646890,3,0.54
+zsm_Latn,zsm_Latn,Standard Malay,Southeast Asian,82285706,1,0.43,407
+bod_Tibt,bod_Tibt,Lhasa Tibetan,Chinese Ethnic Minorities,1202770,2,0.51
+kac_Latn,kac_Latn,Jingpho,Chinese Ethnic Minorities,940000,3,0.15
+kaz_Cyrl,kaz_Cyrl,Kazakh,Chinese Ethnic Minorities,16579380,1,0.82
+uig_Arab,,Uyghur,Chinese Ethnic Minorities,10552072,2,0.70
+uzn_Latn,uzn_Latn,Northern Uzbek,Chinese Ethnic Minorities,29088130,1,0.79
+eng_Latn,eng_Latn,English,US/European,1515231760,1,1
+fra_Latn,fra_Latn,French,US/European,311575110,1,1
+ita_Latn,ita_Latn,Italian,US/European,66789200,1,1
+spa_Latn,spa_Latn,Spanish,US/European,559520830,1,0.96
+deu_Latn,deu_Latn,German,US/European,133908920,1,0.96
