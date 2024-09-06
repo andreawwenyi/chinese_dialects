@@ -5,8 +5,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from jsonlines.jsonlines import InvalidLineError
 
-langs = pd.read_csv("bele_langs.csv", header=None)
-langs.columns = ["lang_code", "lang_name", "lang_category"]
+langs = pd.read_csv("langs.csv")
+langs = langs[langs["lang_code_bele"].notnull()]
+langs["lang_code"] = langs["lang_code_bele"]
 models = pd.read_csv("models.csv", header=None)
 models.columns = ["model_type", "model_path"]
 models["model_name"] = models["model_path"].apply(lambda t: t.split("/")[-1])
@@ -55,17 +56,22 @@ for model_name in models["model_name"]:
         metrics.append({"model_name": model_name, 
                         "lang_category": lang_category,
                         "lang_code": lang_code, 
+                        "lang_name": lang["lang_name"],
                         "accuracy": accuracy})
+        
 df = pd.DataFrame(metrics)
 df = df.sort_values(["lang_category", "lang_code"])
-g = sns.catplot(df, x="lang_code", y='accuracy', 
-                hue='lang_category', 
-                kind="bar", 
-                row="model_name", 
-                row_order=model_order,
-                height=3, aspect=3)
+df.to_csv("bele_output.csv", index=False)
 
-g.tick_params(axis='x', which='both', rotation=40, labelsize=10)
-g.set_titles(row_template="{row_name}")
-g.tight_layout()
-plt.savefig("bele_accuracy.png", dpi=300)
+# g = sns.catplot(df, x="lang_code", y='accuracy', 
+#                 hue='lang_category', 
+#                 kind="bar", 
+#                 row="model_name", 
+#                 row_order=model_order,
+#                 height=3, aspect=3,
+#                 palette=[sns.color_palette("tab10")[k] for k in [0,1,3,4,5]])
+
+# g.tick_params(axis='x', which='both', rotation=40, labelsize=10)
+# g.set_titles(row_template="{row_name}")
+# g.tight_layout()
+# plt.savefig("bele_accuracy.png", dpi=300)
