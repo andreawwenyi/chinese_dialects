@@ -9,8 +9,8 @@ langs = pd.read_csv("langs.csv")
 langs = langs[langs["lang_code_bele"].notnull()]
 langs["lang_code"] = langs["lang_code_bele"]
 models = pd.read_csv("models.csv", header=None)
-models.columns = ["model_type", "model_path"]
-models["model_name"] = models["model_path"].apply(lambda t: t.split("/")[-1])
+models.columns = ["model_name_abrev", "model_path_hf", "model_source"]
+models["model_name"] = models["model_path_hf"].apply(lambda t: t.split("/")[-1])
 model_order = models["model_name"]
 
 correct_answers = dict()    
@@ -61,6 +61,7 @@ for model_name in models["model_name"]:
         
 df = pd.DataFrame(metrics)
 df = df.sort_values(["lang_category", "lang_code"])
+df = df.join(models.set_index(["model_name"]), on='model_name', how='left')
 df.to_csv("bele_output.csv", index=False)
 
 # g = sns.catplot(df, x="lang_code", y='accuracy', 

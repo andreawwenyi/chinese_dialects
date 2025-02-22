@@ -10,7 +10,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--output-dir", type=str, default='tmp')
-parser.add_argument("--lang", type=str, help="one of bo, kk, mn, ug")
+parser.add_argument("--lang", type=str, help="one of tibetan, kazakh, uyghur, mongolian")
 parser.add_argument("--model-name", type=str)
 args = parser.parse_args()
 
@@ -29,15 +29,15 @@ tokenizer = AutoTokenizer.from_pretrained(args.model_name, trust_remote_code=Tru
 model = AutoModelForCausalLM.from_pretrained(args.model_name, torch_dtype=torch.float16, trust_remote_code=True, device_map=device)
 model.eval()
 
-datafiles_location = {"bo": "bo-crawl-only-release-20231112.jsonl", # Tibetan
-                      "kk": "kk-crawl-only-release-20231112.jsonl", # Kazakh
-                      "mn": "mn-crawl-only-release-20231127.jsonl", # Mongolian
-                      "ug": "ug-crawl-only-release-20231112.jsonl" # Uyghur
+datafiles_location = {
+    "tibetan": "bo-crawl-only-release-20231112.jsonl", 
+    "kazakh": "kk-crawl-only-release-20231112.jsonl",
+    "mongolian": "mn-crawl-only-release-20231127.jsonl",
+    "uyghur": "ug-crawl-only-release-20231112.jsonl" 
                               }
-mc2_dataset = load_dataset("pkupie/mc2_corpus", 
+mc2_dataset = load_dataset("/share/magpie/datasets/mc2_corpus", 
                           data_files=datafiles_location[args.lang]
-                              )
-
+)
 
 f = open(output_dir / "logs_2.txt", "w")
 f.write("n_toks\tppl\n")
