@@ -1,7 +1,5 @@
-Qwen1.5,Qwen/Qwen1.5-7B,china
 Qwen2.5,Qwen/Qwen2.5-7B,china
 Yi,01-ai/Yi-6B,china
-DeepSeek,deepseek-ai/deepseek-llm-7b-base,china
 DeepSeek-R1-Llama,deepseek-ai/DeepSeek-R1-Distill-Llama-8B,china
 DeepSeek-R1-Qwen,deepseek-ai/DeepSeek-R1-Distill-Qwen-7B,china
 InternLM2,internlm/internlm2-7b,china
