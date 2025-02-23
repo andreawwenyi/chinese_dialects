@@ -13,7 +13,9 @@ def eval_ppl(model, encodings):
     max_length = 1024
     stride = 512
     seq_len = encodings.input_ids.size(1)
-
+    
+    nll_sum = 0
+    n_tokens = 0
     nlls = []
     prev_end_loc = 0
     for begin_loc in range(0, seq_len, stride):
@@ -31,11 +33,28 @@ def eval_ppl(model, encodings):
             # N.B. the model only calculates loss over trg_len - 1 labels, because it internally shifts the labels
             # to the left by 1.
             neg_log_likelihood = outputs.loss
-
-        nlls.append(neg_log_likelihood)
+        
+        # v2
+        num_valid_tokens = (target_ids != -100).sum().item()  # number of valid tokens in target_ids
+        batch_size = target_ids.size(0)
+        num_loss_tokens = num_valid_tokens - batch_size  # subtract batch_size due to internal label shift
+        nll_sum += neg_log_likelihood * num_loss_tokens
+        n_tokens += num_loss_tokens
 
         prev_end_loc = end_loc
         if end_loc == seq_len:
             break
-    ppl = torch.exp(torch.stack(nlls).mean())
-    return ppl
+
+    avg_nll = nll_sum / n_tokens  # average negative log-likelihood per token
+    ppl = torch.exp(avg_nll)
+
+    return nll_sum.item(), ppl.item()
+
+    ## v1
+    #     nlls.append(neg_log_likelihood)
+
+    #     prev_end_loc = end_loc
+    #     if end_loc == seq_len:
+    #         break
+    # ppl = torch.exp(torch.stack(nlls).mean())
+    # return ppl
