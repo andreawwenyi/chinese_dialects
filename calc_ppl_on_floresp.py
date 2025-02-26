@@ -32,11 +32,11 @@ with open(args.input_file, "r") as f:
     texts = f.readlines()
 
 f = open(output_dir / "logs_2.txt", "w")
-f.write("n_toks\tppl\n")
+f.write("n_toks\tnll_sum\tppl\n")
 
 for i, t in enumerate(texts):
     encodings = tokenizer(t, return_tensors="pt")
     n_toks = encodings.input_ids.size(1)
-    ppl = eval_ppl(model, encodings)
-    print(f"{n_toks}\t{ppl}", file=f, flush=True)
+    nll_sum, ppl = eval_ppl(model, encodings)
+    print(f"{n_toks}\t{nll_sum}\t{ppl}", file=f, flush=True)
 f.close()
