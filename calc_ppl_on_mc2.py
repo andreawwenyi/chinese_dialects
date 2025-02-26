@@ -40,11 +40,12 @@ mc2_dataset = load_dataset("/share/magpie/datasets/mc2_corpus",
 )
 
 f = open(output_dir / "logs_2.txt", "w")
-f.write("n_toks\tppl\n")
+f.write("n_toks\tnll_sum\tppl\n")
 
-for t in mc2_dataset['train']['text']:
+# randomly select 10,000
+for t in mc2_dataset['train'].train_test_split(test_size=10000)['test']['text']:
     encodings = tokenizer(t, return_tensors="pt")
     n_toks = encodings.input_ids.size(1)
-    ppl = eval_ppl(model, encodings)
-    print(f"{n_toks}\t{ppl}", file=f, flush=True)
+    nll_sum, ppl = eval_ppl(model, encodings)
+    print(f"{n_toks}\t{nll_sum}\t{ppl}", file=f, flush=True)
 f.close()
