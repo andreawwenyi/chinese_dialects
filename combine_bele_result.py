@@ -50,9 +50,11 @@ for model_name in models["model_name"]:
             print(model_name, lang_code, "InvalidLineError")
             continue
         else:
-            print(model_name, lang_code)
+            
             if len(model_answers) != 900:
-                continue
+                print(model_name, lang_code, f"Only has {len(len(model_answers))} rows")
+            else:
+                print(model_name, lang_code)
         metrics.append({"model_name": model_name, 
                         "lang_category": lang_category,
                         "lang_code": lang_code, 
