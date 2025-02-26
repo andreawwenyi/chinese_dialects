@@ -49,29 +49,16 @@ df = df.sort_values(["lang_category", "lang_code"])
 df = df.join(models.set_index(["model_name"]), on='model_name', how='left')
 
 # calculate IP
-for base_lang in ['eng_Latn', 'cmn_Hans']:
-    base_lang_result = df[df['lang_code'] == base_lang].copy()
-    base_lang_result = base_lang_result.pivot(index='index', columns='model_name', values='nll_sum')
-    df[f'ip_base_{base_lang}'] = None
+base_lang = "eng_Latn"
+base_lang_result = df[df['lang_code'] == base_lang].copy()
+base_lang_result = base_lang_result.pivot(index='index', columns='model_name', values='nll_sum')
+df[f'IP'] = None
+for model_name in df['model_name'].unique():
+    for lang_code in df['lang_code'].unique():
+        model_lang_df = df[(df['model_name'] == model_name) & (df['lang_code'] == lang_code)].copy()
+        model_lang_df = model_lang_df.join(base_lang_result, on='index')
+        
+        ip = model_lang_df[model_name] / model_lang_df['nll_sum']
+        df.loc[(df['model_name'] == model_name) & (df['lang_code'] == lang_code), f'ip_base_{base_lang}'] = ip
 
-    output = pd.DataFrame()
-    for model_name in df['model_name'].unique():
-        for lang_code in df['lang_code'].unique():
-            model_lang_df = df[(df['model_name'] == model_name) & (df['lang_code'] == lang_code)].copy()
-            model_lang_df = model_lang_df.join(base_lang_result, on='index')
-            
-            ip = model_lang_df['nll_sum'] / model_lang_df[model_name]
-            df.loc[(df['model_name'] == model_name) & (df['lang_code'] == lang_code), f'ip_base_{base_lang}'] = ip
-
-    df.to_csv("floresp_nll_output_v2.csv", index=False)
-
-df["tok_efficiency"] = df["n_toks"] / df["n_chars"]
-# df = df[~df['lang_code'].isin(["yue_Hant", "uig_Arab"])]
-g = sns.catplot(df, x="lang_code", y='tok_efficiency', hue='lang_category', kind="bar", 
-                col="model_name", col_wrap=2, col_order = model_order,
-                height=2, aspect=3)
-g.tick_params(axis='x', which='both', rotation=40, labelsize=10)
-g.set_titles(col_template="{col_name}")
-g.set_ylabels("fertility")
-g.tight_layout()
-plt.savefig("./figures/floresp_tok_bar.pdf")
+df.to_csv("floresp_nll_output_v2.csv", index=False)
