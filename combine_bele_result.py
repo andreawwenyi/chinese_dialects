@@ -52,7 +52,7 @@ for model_name in models["model_name"]:
         else:
             
             if len(model_answers) != 900:
-                print(model_name, lang_code, f"Only has {len(len(model_answers))} rows")
+                print(model_name, lang_code, f"Only has {len(model_answers)} rows")
             else:
                 print(model_name, lang_code)
         metrics.append({"model_name": model_name, 
