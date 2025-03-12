@@ -57,7 +57,7 @@ class YiInstruct(InstructModel):
         ]
 
         input_ids = self.tokenizer.apply_chat_template(conversation=messages, tokenize=True, return_tensors='pt')
-        output_ids = self.model.generate(input_ids.to(self.model.device), eos_token_id=self.tokenizer.eos_token_id)
+        output_ids = self.model.generate(input_ids.to(self.model.device), eos_token_id=self.tokenizer.eos_token_id, max_new_tokens=256)
         response = self.tokenizer.decode(output_ids[0][input_ids.shape[1]:], skip_special_tokens=True)
         return response
 
@@ -69,7 +69,7 @@ class InternLMInstruct(InstructModel):
         ]
 
         tokenized_messages = self.tokenizer.apply_chat_template(messages, tokenize=True, add_generation_prompt=True, return_tensors="pt").to(self.model.device)
-        generated_ids = self.model.generate(tokenized_messages, max_new_tokens=1024, temperature=1, repetition_penalty=1.005, top_k=40, top_p=0.8)
+        generated_ids = self.model.generate(tokenized_messages, max_new_tokens=1024, do_sample=True, temperature=1, repetition_penalty=1.005, top_k=40, top_p=0.8)
 
         generated_ids = [
             output_ids[len(input_ids):] for input_ids, output_ids in zip(tokenized_messages, generated_ids)
@@ -150,23 +150,32 @@ class OlmoInstruct(InstructModel):
     def prompt_chat_model(self, system_prompt, user_prompt):
         messages = [
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt}
-        ]
-        raise
+            {"role": "user", "content": user_prompt}]
+        input_ids = self.tokenizer.apply_chat_template(
+            messages,
+            add_generation_prompt=True,
+            return_tensors="pt"
+        ).to(self.model.device)
+
+        outputs = self.model.generate(input_ids, max_new_tokens=256)
+        response = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
+        return response
 
 class DeepSeekInstruct(InstructModel):
     def prompt_chat_model(self, system_prompt, user_prompt):
-        system_prompt = ""
-        """
-        We recommend adhering to the following configurations when utilizing the DeepSeek-R1 series models, including benchmarking, to achieve the expected performance:
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
+        ]
+        input_ids = self.tokenizer.apply_chat_template(
+            messages,
+            add_generation_prompt=True,
+            return_tensors="pt"
+        ).to(self.model.device)
 
-        Set the temperature within the range of 0.5-0.7 (0.6 is recommended) to prevent endless repetitions or incoherent outputs.
-        Avoid adding a system prompt; all instructions should be contained within the user prompt.
-        For mathematical problems, it is advisable to include a directive in your prompt such as: "Please reason step by step, and put your final answer within \boxed{}."
-        When evaluating model performance, it is recommended to conduct multiple tests and average the results.
-        Additionally, we have observed that the DeepSeek-R1 series models tend to bypass thinking pattern (i.e., outputting "<think>\n\n</think>") when responding to certain queries, which can adversely affect the model's performance. To ensure that the model engages in thorough reasoning, we recommend enforcing the model to initiate its response with "<think>\n" at the beginning of every output.
-
-        """
+        outputs = self.model.generate(input_ids, max_new_tokens=1024, temperature=0.6)
+        response = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
+        return response
 
 def load_model(model_path):
     model_name = model_path.split("/")[-1]
