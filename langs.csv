@@ -13,8 +13,8 @@ zsm_Latn,zsm_Latn,Standard Malay,Southeast Asian,82285706,1,0.43,407
 bod_Tibt,bod_Tibt,Lhasa Tibetan,Chinese Ethnic Minorities,1202770,2,0.51
 kac_Latn,kac_Latn,Jingpho,Chinese Ethnic Minorities,940000,3,0.15
 uig_Arab,,Uyghur,Chinese Ethnic Minorities,10552072,2,0.70
-eng_Latn,eng_Latn,English,US/European,1515231760,1,1
-fra_Latn,fra_Latn,French,US/European,311575110,1,1
-ita_Latn,ita_Latn,Italian,US/European,66789200,1,1
-spa_Latn,spa_Latn,Spanish,US/European,559520830,1,0.96
-deu_Latn,deu_Latn,German,US/European,133908920,1,0.96
+eng_Latn,eng_Latn,English,European,1515231760,1,1
+fra_Latn,fra_Latn,French,European,311575110,1,1
+ita_Latn,ita_Latn,Italian,European,66789200,1,1
+spa_Latn,spa_Latn,Spanish,European,559520830,1,0.96
+deu_Latn,deu_Latn,German,European,133908920,1,0.96
