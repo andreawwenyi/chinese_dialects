@@ -136,15 +136,21 @@ class MistralInstruct(InstructModel):
 
 class GemmaInstruct(InstructModel):
     def prompt_chat_model(self, system_prompt, user_prompt):
-        messages = [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt}
-        ]
-        input_ids = self.tokenizer.apply_chat_template(messages, return_tensors="pt", return_dict=True).to(self.model.device)
+        input_ids = self.tokenizer(user_prompt, return_tensors="pt").to(self.model.device)
         outputs = self.model.generate(**input_ids, max_new_tokens=256)
         response = self.tokenizer.decode(outputs[0])
-
         return response
+
+        # --- the following code does not produce any answer to belebele --- #
+        # messages = [
+        #     # {"role": "system", "content": system_prompt}, # see: https://huggingface.co/google/gemma-1.1-7b-it/discussions/15
+        #     {"role": "user", "content": user_prompt}
+        # ]
+        # input_ids = self.tokenizer.apply_chat_template(messages, return_tensors="pt", return_dict=True).to(self.model.device)
+        # outputs = self.model.generate(**input_ids, max_new_tokens=256)
+        # response = self.tokenizer.decode(outputs[0])
+
+        # return response
 
 class OlmoInstruct(InstructModel):
     def prompt_chat_model(self, system_prompt, user_prompt):
