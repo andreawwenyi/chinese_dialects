@@ -1,4 +1,4 @@
-model_name_abrev,model_path_hf,model_source,instruction_tuned
+model_name_abrev,model_path_hf,model_source,instruction_tuned,system_prompt
 Qwen2.5,Qwen/Qwen2.5-7B,China,0
 Yi-1.5,01-ai/Yi-1.5-9B,China,0
 DeepSeek-R1-Llama,deepseek-ai/DeepSeek-R1-Distill-Llama-8B,China,1
@@ -9,11 +9,11 @@ Llama3,meta-llama/Meta-Llama-3-8B,US/Europe,0
 Mistral,mistralai/Mistral-7B-v0.3,US/Europe,0
 Gemma2,google/gemma-2-9b,US/Europe,0
 Olmo2,allenai/OLMo-2-1124-7B,US/Europe,0
-Qwen2.5-Instruct,Qwen/Qwen2.5-7B-Instruct,China,1
-Yi1.5-Chat,01-ai/Yi-1.5-9B-Chat,China,1
-InternLM3-Instruct,internlm/internlm3-8b-instruct,China,1
+Qwen2.5-Instruct,Qwen/Qwen2.5-7B-Instruct,China,1,"You are Qwen, created by Alibaba Cloud. You are a helpful assistant."
+Yi-1.5-Chat,01-ai/Yi-1.5-9B-Chat,China,1
+InternLM3-Instruct,internlm/internlm3-8b-instruct,China,1,"""You are an AI assistant whose name is InternLM (书生·浦语).\n- InternLM (书生·浦语) is a conversational language model that is developed by Shanghai AI Laboratory (上海人工智能实验室). It is designed to be helpful, honest, and harmless.\n- InternLM (书生·浦语) can understand and communicate fluently in the language chosen by the user such as English and 中文."""
 Baichuan2-Chat,baichuan-inc/Baichuan2-7B-Chat,China,1
 Llama3-Instruct,meta-llama/Meta-Llama-3-8B-Instruct,US/Europe,1
 Mistral-Instruct,mistralai/Mistral-7B-Instruct-v0.3,US/Europe,1
 Gemma2-Instruct,google/gemma-2-9b-it,US/Europe,1
-Olmo2-Instruct,allenai/OLMo-2-1124-7B-Instruct,US/Europe,1
+Olmo2-Instruct,allenai/OLMo-2-1124-7B-Instruct,US/Europe,1,"You are OLMo 2, a helpful and harmless AI Assistant built by the Allen Institute for AI."
